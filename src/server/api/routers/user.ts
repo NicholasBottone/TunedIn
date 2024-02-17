@@ -6,6 +6,9 @@ import {
   publicProcedure,
 } from "~/server/api/trpc";
 
+import { SpotifyApi } from "@spotify/web-api-ts-sdk";
+import { env } from "~/env";
+
 export const userRouter = createTRPCRouter({
   getUserById: publicProcedure
     .input(z.object({ id: z.string() }))
@@ -21,25 +24,19 @@ export const userRouter = createTRPCRouter({
   getListenedToOverlap: protectedProcedure
     .input(z.object({ targetUserId: z.string() }))
     .query(async ({ ctx, input }) => {
-      const targetUser = await ctx.db.user.findUnique({
+      const targetUser = await ctx.db.user.findUniqueOrThrow({
         where: { id: input.targetUserId },
         include: {
           listenedTo: true,
         },
       });
-      if (!targetUser) {
-        throw new Error("User not found");
-      }
 
-      const currentUser = await ctx.db.user.findUnique({
+      const currentUser = await ctx.db.user.findUniqueOrThrow({
         where: { id: ctx.session.user.id },
         include: {
           listenedTo: true,
         },
       });
-      if (!currentUser) {
-        throw new Error("Current user not found");
-      }
 
       const listenedToOverlap = currentUser.listenedTo.filter((album) =>
         targetUser.listenedTo.includes(album),
@@ -51,12 +48,9 @@ export const userRouter = createTRPCRouter({
   followUser: protectedProcedure
     .input(z.object({ userId: z.string() }))
     .mutation(async ({ ctx, input }) => {
-      const user = await ctx.db.user.findUnique({
+      const user = await ctx.db.user.findUniqueOrThrow({
         where: { id: input.userId },
       });
-      if (!user) {
-        throw new Error("User not found");
-      }
 
       return ctx.db.user.update({
         where: { id: ctx.session.user.id },
@@ -73,12 +67,9 @@ export const userRouter = createTRPCRouter({
   unfollowUser: protectedProcedure
     .input(z.object({ userId: z.string() }))
     .mutation(async ({ ctx, input }) => {
-      const user = await ctx.db.user.findUnique({
+      const user = await ctx.db.user.findUniqueOrThrow({
         where: { id: input.userId },
       });
-      if (!user) {
-        throw new Error("User not found");
-      }
 
       return ctx.db.user.update({
         where: { id: ctx.session.user.id },
@@ -93,15 +84,12 @@ export const userRouter = createTRPCRouter({
     }),
 
   getSocialReviewsFeed: protectedProcedure.query(async ({ ctx }) => {
-    const user = await ctx.db.user.findUnique({
+    const user = await ctx.db.user.findUniqueOrThrow({
       where: { id: ctx.session.user.id },
       include: {
         following: true,
       },
     });
-    if (!user) {
-      throw new Error("User not found");
-    }
 
     const followingIds = user.following.map((user) => user.id);
 
@@ -119,5 +107,23 @@ export const userRouter = createTRPCRouter({
         createdBy: true,
       },
     });
+  }),
+
+  getTopTracks: protectedProcedure.query(async ({ ctx }) => {
+    const account = await ctx.db.account.findFirstOrThrow({
+      where: { userId: ctx.session.user.id },
+    });
+
+    console.log(account);
+
+    const spotify = SpotifyApi.withAccessToken(env.SPOTIFY_CLIENT_ID, {
+      access_token: account.access_token!,
+      refresh_token: account.refresh_token!,
+      expires_in: account.expires_at!,
+      token_type: "Bearer",
+    });
+
+    const topTracks = await spotify.currentUser.topItems("tracks");
+    return topTracks.items;
   }),
 });
