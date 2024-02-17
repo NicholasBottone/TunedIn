@@ -7,23 +7,7 @@ generator client {
 
 datasource db {
     provider = "postgresql"
-    // NOTE: When using mysql or sqlserver, uncomment the @db.Text annotations in model Account below
-    // Further reading:
-    // https://next-auth.js.org/adapters/prisma#create-the-prisma-schema
-    // https://www.prisma.io/docs/reference/api-reference/prisma-schema-reference#string
-    url      = env("DATABASE_URL")
-}
-
-model Post {
-    id        Int      @id @default(autoincrement())
-    name      String
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
-
-    createdBy   User   @relation(fields: [createdById], references: [id])
-    createdById String
-
-    @@index([name])
+    url      = env("DATABASE_PRISMA_URL")
 }
 
 // Necessary for Next auth
@@ -53,15 +37,67 @@ model Session {
     user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
+model Artist {
+    id          String   @id @default(cuid())
+    name        String
+    description String?
+    genres      String[]
+    popularity  Int
+    image       String?
+    albums      Album[]
+    spotifyId   String?
+    spotifyUrl  String?
+
+    @@index([name])
+}
+
+model Album {
+    id          String   @id @default(cuid())
+    name        String
+    genre       String
+    releaseYear Int
+    image       String
+    tracks      String[]
+    genres      String[]
+    popularity  Int
+
+    spotifyId  String?
+    spotifyUrl String?
+
+    Artist   Artist @relation(fields: [artistId], references: [id], onDelete: Cascade)
+    artistId String
+
+    usersListenedTo User[]
+    Review          Review[]
+
+    @@index([name])
+}
+
+model Review {
+    id        String   @id @default(cuid())
+    message   String
+    rating    Int
+    createdAt DateTime @default(now())
+
+    album   Album  @relation(fields: [albumId], references: [id])
+    albumId String
+
+    createdBy   User   @relation(fields: [createdById], references: [id])
+    createdById String
+}
+
 model User {
     id            String    @id @default(cuid())
     name          String?
     email         String?   @unique
     emailVerified DateTime?
     image         String?
-    accounts      Account[]
-    sessions      Session[]
-    posts         Post[]
+
+    listenedTo Album[]
+    reviews    Review[]
+
+    accounts Account[]
+    sessions Session[]
 }
 
 model VerificationToken {
