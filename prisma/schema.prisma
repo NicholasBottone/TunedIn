@@ -41,14 +41,12 @@ model Album {
     id          String   @id
     name        String
     artist      String
-    releaseYear Int
+    releaseDate String
     image       String?
     tracksCount Int
     genres      String[]
     popularity  Int
     spotifyUrl  String?
-
-    artistId String
 
     usersListenedTo User[]
     Review          Review[]

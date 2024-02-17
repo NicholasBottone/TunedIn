@@ -10,6 +10,16 @@ import { SpotifyApi } from "@spotify/web-api-ts-sdk";
 import { env } from "~/env";
 
 export const userRouter = createTRPCRouter({
+  getSelf: protectedProcedure.query(async ({ ctx }) => {
+    return ctx.db.user.findUniqueOrThrow({
+      where: { id: ctx.session.user.id },
+      include: {
+        listenedTo: true,
+        reviews: true,
+      },
+    });
+  }),
+
   getUserById: publicProcedure
     .input(z.object({ id: z.string() }))
     .query(({ ctx, input }) => {
@@ -17,6 +27,7 @@ export const userRouter = createTRPCRouter({
         where: { id: input.id },
         include: {
           reviews: true,
+          listenedTo: true,
         },
       });
     }),
@@ -48,7 +59,7 @@ export const userRouter = createTRPCRouter({
   followUser: protectedProcedure
     .input(z.object({ userId: z.string() }))
     .mutation(async ({ ctx, input }) => {
-      const user = await ctx.db.user.findUniqueOrThrow({
+      await ctx.db.user.findUniqueOrThrow({
         where: { id: input.userId },
       });
 
@@ -67,7 +78,7 @@ export const userRouter = createTRPCRouter({
   unfollowUser: protectedProcedure
     .input(z.object({ userId: z.string() }))
     .mutation(async ({ ctx, input }) => {
-      const user = await ctx.db.user.findUniqueOrThrow({
+      await ctx.db.user.findUniqueOrThrow({
         where: { id: input.userId },
       });
 
@@ -109,7 +120,7 @@ export const userRouter = createTRPCRouter({
     });
   }),
 
-  getTopTracks: protectedProcedure.query(async ({ ctx }) => {
+  refreshTopTracks: protectedProcedure.mutation(async ({ ctx }) => {
     const account = await ctx.db.account.findFirstOrThrow({
       where: { userId: ctx.session.user.id },
     });
@@ -124,46 +135,28 @@ export const userRouter = createTRPCRouter({
     });
 
     const topTracks = await spotify.currentUser.topItems("tracks");
+
     await ctx.db.user.update({
-
       where: { id: ctx.session.user.id },
-      data:{
-        listenedTo:{
-
-          connectOrCreate: 
-            topTracks.items.map((track)=>{
-              return {
-                where :{id: track.album.id},
-                create :{
-                  
-                  id: track.album.id,
-                  genres:track.album.genres,
-                  image:track.album.images[0],
-                  name:track.album.name,
-                  popularity:track.album.popularity,
-                  releaseYear:track.album.release_date,
-                  artist:track.album.artists[0]?.name
-                
-                }
-              }
-            })
-          
-            
-        }
-      }
-
-
-
-    })
-    
-    
-    findFirstOrThrow({
-      where: { userId: ctx.session.user.id },
+      data: {
+        listenedTo: {
+          connectOrCreate: topTracks.items.map((track) => {
+            return {
+              where: { id: track.album.id },
+              create: {
+                id: track.album.id,
+                genres: track.album.genres,
+                image: track.album.images[0]?.url,
+                name: track.album.name,
+                popularity: track.album.popularity,
+                releaseDate: track.album.release_date,
+                artist: track.album.artists[0]!.name,
+                tracksCount: track.album.total_tracks,
+              },
+            };
+          }),
+        },
+      },
     });
-    topTracks.items.map((track)=>{
-      return track.album;
-    })
-
-    return topTracks.items;
   }),
 });

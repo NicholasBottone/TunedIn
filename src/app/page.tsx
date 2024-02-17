@@ -1,10 +1,11 @@
 import Image from "next/image";
 import { getServerAuthSession } from "~/server/auth";
 import { api } from "~/trpc/server";
+import AuthComponent from "./_components/auth-component";
 
 export default async function Home() {
   const session = await getServerAuthSession();
-  const topTracks = await api.user.getTopTracks.query();
+  const user = await api.user.getSelf.query();
 
   return (
     <>
@@ -24,18 +25,18 @@ export default async function Home() {
               height={200}
             />
             <br />
-            {topTracks.map((track) => (
-              <div key={track.id}>
+            {user?.listenedTo.map((album) => (
+              <div key={album.id}>
                 <Image
-                  src={track.album.images[0]!.url}
-                  alt={track.album.name}
+                  src={album.image!}
+                  alt={album.name}
                   width={200}
                   height={200}
                 />
-                <p>{track.name}</p>
-                <p>{track.artists.map((artist) => artist.name).join(", ")}</p>
+                {album.name}
               </div>
             ))}
+            <AuthComponent />
           </>
         )}
       </p>
