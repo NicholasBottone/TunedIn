@@ -37,34 +37,17 @@ model Session {
     user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
-model Artist {
-    id          String   @id @default(cuid())
+model Album {
+    id          String   @id
     name        String
-    description String?
+    artist      String
+    releaseYear Int
+    image       String?
+    tracksCount Int
     genres      String[]
     popularity  Int
-    image       String?
-    albums      Album[]
-    spotifyId   String?
     spotifyUrl  String?
 
-    @@index([name])
-}
-
-model Album {
-    id          String   @id @default(cuid())
-    name        String
-    genre       String
-    releaseYear Int
-    image       String
-    tracks      String[]
-    genres      String[]
-    popularity  Int
-
-    spotifyId  String?
-    spotifyUrl String?
-
-    Artist   Artist @relation(fields: [artistId], references: [id], onDelete: Cascade)
     artistId String
 
     usersListenedTo User[]
