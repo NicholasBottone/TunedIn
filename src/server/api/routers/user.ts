@@ -124,6 +124,46 @@ export const userRouter = createTRPCRouter({
     });
 
     const topTracks = await spotify.currentUser.topItems("tracks");
+    await ctx.db.user.update({
+
+      where: { id: ctx.session.user.id },
+      data:{
+        listenedTo:{
+
+          connectOrCreate: 
+            topTracks.items.map((track)=>{
+              return {
+                where :{id: track.album.id},
+                create :{
+                  
+                  id: track.album.id,
+                  genres:track.album.genres,
+                  image:track.album.images[0],
+                  name:track.album.name,
+                  popularity:track.album.popularity,
+                  releaseYear:track.album.release_date,
+                  artist:track.album.artists[0]?.name
+                
+                }
+              }
+            })
+          
+            
+        }
+      }
+
+
+
+    })
+    
+    
+    findFirstOrThrow({
+      where: { userId: ctx.session.user.id },
+    });
+    topTracks.items.map((track)=>{
+      return track.album;
+    })
+
     return topTracks.items;
   }),
 });
