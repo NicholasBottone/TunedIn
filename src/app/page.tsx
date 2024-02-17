@@ -2,10 +2,13 @@ import Image from "next/image";
 import { getServerAuthSession } from "~/server/auth";
 import { api } from "~/trpc/server";
 import AuthComponent from "./_components/auth-component";
+import { useEffect } from "react";
 
 export default async function Home() {
   const session = await getServerAuthSession();
   const user = await api.user.getSelf.query();
+  const album = await api.album.getAlbumBySearch.query({query:""});
+
 
   return (
     <>
