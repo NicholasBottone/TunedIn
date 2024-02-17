@@ -91,4 +91,33 @@ export const reviewRouter = createTRPCRouter({
         },
       });
     }),
+
+  getSocialReviewsFeed: protectedProcedure.query(async ({ ctx }) => {
+    const user = await ctx.db.user.findUnique({
+      where: { id: ctx.session.user.id },
+      include: {
+        following: true,
+      },
+    });
+    if (!user) {
+      throw new Error("User not found");
+    }
+
+    const followingIds = user.following.map((user) => user.id);
+
+    return ctx.db.review.findMany({
+      where: {
+        createdById: {
+          in: followingIds,
+        },
+      },
+      orderBy: {
+        createdAt: "desc",
+      },
+      include: {
+        album: true,
+        createdBy: true,
+      },
+    });
+  }),
 });
