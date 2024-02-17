@@ -6,7 +6,7 @@ import {
   publicProcedure,
 } from "~/server/api/trpc";
 
-export const reviewRouter = createTRPCRouter({
+export const userRouter = createTRPCRouter({
   getUserById: publicProcedure
     .input(z.object({ id: z.string() }))
     .query(({ ctx, input }) => {
