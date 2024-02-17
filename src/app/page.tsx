@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { getServerAuthSession } from "~/server/auth";
 import { api } from "~/trpc/server";
 
@@ -13,15 +14,30 @@ export default async function Home() {
         <br />
         {session?.user.id}
         <br />
-        <img src={session?.user.image} alt="Profile picture" />
-        <br />
-        {topTracks.map((track) => (
-          <div key={track.id}>
-            <img src={track.album.images[0].url} alt={track.album.name} />
-            <p>{track.name}</p>
-            <p>{track.artists.map((artist) => artist.name).join(", ")}</p>
-          </div>
-        ))}
+
+        {session && (
+          <>
+            <Image
+              src={session.user.image!}
+              alt={session.user.name!}
+              width={200}
+              height={200}
+            />
+            <br />
+            {topTracks.map((track) => (
+              <div key={track.id}>
+                <Image
+                  src={track.album.images[0]!.url}
+                  alt={track.album.name}
+                  width={200}
+                  height={200}
+                />
+                <p>{track.name}</p>
+                <p>{track.artists.map((artist) => artist.name).join(", ")}</p>
+              </div>
+            ))}
+          </>
+        )}
       </p>
     </>
   );
