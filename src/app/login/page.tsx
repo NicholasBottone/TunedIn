@@ -1,6 +1,11 @@
 import { FunctionComponent } from "react";
+<<<<<<< Updated upstream
 import TunedinLogoIcon from "~/app/_components/TunedinLogoIcon";
 import AppleSignin from "~/app/_components/AppleSignin";
+=======
+import TunedinLogoIcon from "../_components/TunedinLogoIcon";
+import AppleSignin from "../_components/AppleSignin";
+>>>>>>> Stashed changes
 
 const LoginPage: FunctionComponent = () => {
   return (
