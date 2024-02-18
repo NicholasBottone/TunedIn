@@ -43,7 +43,7 @@ model Album {
     artist      String
     releaseDate String
     image       String?
-    tracksCount Int
+    tracks      String[]
     genres      String[]
     popularity  Int
     spotifyUrl  String?

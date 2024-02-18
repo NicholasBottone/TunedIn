@@ -60,7 +60,7 @@ export const userRouter = createTRPCRouter({
                   popularity: track.album.popularity ?? track.popularity,
                   releaseDate: track.album.release_date,
                   artist: track.album.artists[0]!.name,
-                  tracksCount: track.album.total_tracks,
+                  tracks: [],
                 },
               };
             }),
