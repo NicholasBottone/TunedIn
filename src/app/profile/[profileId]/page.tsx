@@ -153,7 +153,7 @@ export default async function ProfilePage({
       <Typography variant="h5" gutterBottom>
         Comments Made:
       </Typography>
-      {/* <List>
+      <List>
         {user?.reviews.map((review, index) => {
           return (
             <Box display="flex" marginBottom="16px" key={review.id}>
@@ -189,7 +189,7 @@ export default async function ProfilePage({
             </Box>
           );
         })}
-      </List> */}
+      </List>
     </div>
   );
 }
