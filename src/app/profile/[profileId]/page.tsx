@@ -146,12 +146,12 @@ export default async function ProfilePage({params}: {params: { profileId: string
           return(
           <Box display="flex" marginBottom="16px" key={review.id}>
           <Avatar
-            alt={session?.user?.name ?? undefined}
-            src={session?.user.image ?? undefined}
+            alt={user?.name ?? undefined}
+            src={user?.image ?? undefined}
           />
           <div>
             <Typography variant="subtitle1">
-              {session?.user.name}
+              {user.name}
             </Typography>
             <Typography>{review.rating}</Typography>
             <Typography fontStyle="italic">
