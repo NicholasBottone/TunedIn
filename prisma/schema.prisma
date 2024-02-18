@@ -49,7 +49,8 @@ model Album {
     spotifyUrl  String?
 
     usersListenedTo User[]
-    Review          Review[]
+    reviews         Review[]
+    playlists       Playlist[]
 
     @@index([name])
 }
@@ -91,4 +92,11 @@ model VerificationToken {
     expires    DateTime
 
     @@unique([identifier, token])
+}
+
+model Playlist {
+    id          String   @id
+    name        String
+    lastUpdated DateTime @updatedAt
+    albums      Album[]
 }
