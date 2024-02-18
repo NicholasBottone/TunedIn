@@ -7,12 +7,18 @@ import NavsComponent from "./_components/NavsComponent";
 import AlbumInfoPage from "./_components/album/AlbumInfoComponent";
 import { FunctionComponent } from "react";
 
-const ProfilePage: FunctionComponent = () => {
+const HomePage: FunctionComponent = () => {
   return (
     <>
       <NavsComponent />
-      <div style={{ backgroundColor: "black", height: "180vh" }}>
-        <h1 style={{ color: "white", padding: "1px", marginLeft: "200px" }}>
+      <div style={{ backgroundColor: "black", height: "200vh" }}>
+        <h1
+          style={{
+            color: "white",
+            marginLeft: "200px",
+            backgroundColor: "black",
+          }}
+        >
           Trending Albums
         </h1>
         <TopHitsComponent />
@@ -28,8 +34,6 @@ const ProfilePage: FunctionComponent = () => {
         </h1>
         <PersonalTopsComponents />
       </div>
-
-      <LandingPageComponent />
     </>
   );
 };

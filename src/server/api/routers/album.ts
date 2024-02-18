@@ -19,6 +19,7 @@ export const albumRouter = createTRPCRouter({
         where: {
           name: {
             contains: input.query,
+            mode: "insensitive",
           },
         },
       });

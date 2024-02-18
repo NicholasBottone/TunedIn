@@ -1,10 +1,22 @@
 import { FunctionComponent } from "react";
-import { Avatar, Typography, List, ListItem, ListItemAvatar, ListItemText,Box } from '@mui/material';
+import {
+  Avatar,
+  Typography,
+  List,
+  ListItem,
+  ListItemAvatar,
+  ListItemText,
+  Box,
+} from "@mui/material";
 import { getServerAuthSession } from "~/server/auth";
 import { api } from "~/trpc/server";
-import { TextField, Button,  Rating } from '@mui/material';
+import { TextField, Button, Rating } from "@mui/material";
 
-export default async function ProfilePage({params}: {params: { profileId: string };}){
+export default async function ProfilePage({
+  params,
+}: {
+  params: { profileId: string };
+}) {
   // return (
   //   // <div className="w-full relative bg-midnightblue overflow-hidden flex flex-col items-start justify-start pt-0 px-0 pb-[166px] box-border gap-[34px] tracking-[normal] mq750:gap-[34px]">
   //   //   <Navs1 />
@@ -122,57 +134,55 @@ export default async function ProfilePage({params}: {params: { profileId: string
   // );
   console.log(params.profileId);
   const session = await getServerAuthSession();
-  
-  const user = await api.user.getUserById.query({id:params?.profileId})
 
+  const user = await api.user.getUserById.query({ id: params?.profileId });
 
   return (
     <div>
       <Typography variant="h4" gutterBottom>
         {user?.name}'s Profile
       </Typography>
-      <Avatar alt={user?.name ?? undefined}
-              src={user?.image ?? undefined}/>
+      <Avatar alt={user?.name ?? undefined} src={user?.image ?? undefined} />
       <Typography variant="h5" gutterBottom>
         Comments Made:
       </Typography>
       <List>
-        {user?.reviews.map(
-          (review, index) => 
-        {
-          return(
-          <Box display="flex" marginBottom="16px" key={review.id}>
-          <Avatar
-            alt={user?.name ?? undefined}
-            src={user?.image ?? undefined}
-          />
-          <div>
-            <Typography variant="subtitle1">
-              {user.name}
-            </Typography>
-            <Typography>{review.rating}</Typography>
-            <Typography fontStyle="italic">
-              {review.message}
-            </Typography>
+        {user?.reviews.map((review, index) => {
+          return (
+            <Box display="flex" marginBottom="16px" key={review.id}>
+              <Avatar
+                alt={user?.name ?? undefined}
+                src={user?.image ?? undefined}
+              />
+              <div>
+                <Typography variant="subtitle1">{user.name}</Typography>
+                <Typography>{review.rating}</Typography>
+                <Typography fontStyle="italic">{review.message}</Typography>
 
-            <div style={{ marginBottom: '16px' }}>
-              <div style={{ display: 'flex', alignItems: 'center', marginBottom: '8px' }}>
-                <Typography variant="body1">User Rating:</Typography>
-                <Rating
-                  name="user-rating"
-                  value={review.rating}
-                  precision={1}
-                  readOnly
-                />
-                <Typography variant="body1">{review.rating}/10</Typography>
+                <div style={{ marginBottom: "16px" }}>
+                  <div
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      marginBottom: "8px",
+                    }}
+                  >
+                    <Typography variant="body1">User Rating:</Typography>
+                    <Rating
+                      name="user-rating"
+                      value={review.rating}
+                      precision={1}
+                      readOnly
+                    />
+                    <Typography variant="body1">{review.rating}/10</Typography>
+                  </div>
+                  <Typography variant="body1">{review.message}</Typography>
+                </div>
               </div>
-              <Typography variant="body1">{review.message}</Typography>
-            </div>
-          </div>
-          </Box>)
-
+            </Box>
+          );
         })}
       </List>
     </div>
   );
-};
+}
