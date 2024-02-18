@@ -11,6 +11,64 @@ import { env } from "~/env";
 
 export const userRouter = createTRPCRouter({
   getSelf: protectedProcedure.query(async ({ ctx }) => {
+    const lastSync = await ctx.db.user.findUniqueOrThrow({
+      where: { id: ctx.session.user.id },
+      select: {
+        lastSpotifySync: true,
+      },
+    });
+
+    if (
+      lastSync.lastSpotifySync &&
+      lastSync.lastSpotifySync?.getDate() < Date.now() - 1000 * 60 * 60 * 24
+    ) {
+      const account = await ctx.db.account.findFirstOrThrow({
+        where: { userId: ctx.session.user.id },
+      });
+
+      const spotify = SpotifyApi.withAccessToken(env.SPOTIFY_CLIENT_ID, {
+        access_token: account.access_token!,
+        refresh_token: account.refresh_token!,
+        expires_in: account.expires_at! * 1000 - Date.now(),
+        token_type: "Bearer",
+      });
+
+      let topTracks;
+      try {
+        topTracks = await spotify.currentUser.topItems("tracks");
+      } catch (error) {
+        // Token is expired, need to delete the account and re-authenticate
+        await ctx.db.account.delete({
+          where: { id: account.id },
+        });
+
+        throw new Error("Token expired, please re-authenticate");
+      }
+
+      await ctx.db.user.update({
+        where: { id: ctx.session.user.id },
+        data: {
+          listenedTo: {
+            connectOrCreate: topTracks.items.map((track) => {
+              return {
+                where: { id: track.album.id },
+                create: {
+                  id: track.album.id,
+                  genres: track.album.genres ?? [],
+                  image: track.album.images[0]?.url,
+                  name: track.album.name,
+                  popularity: track.album.popularity ?? track.popularity,
+                  releaseDate: track.album.release_date,
+                  artist: track.album.artists[0]!.name,
+                  tracksCount: track.album.total_tracks,
+                },
+              };
+            }),
+          },
+        },
+      });
+    }
+
     return ctx.db.user.findUniqueOrThrow({
       where: { id: ctx.session.user.id },
       include: {
@@ -116,54 +174,6 @@ export const userRouter = createTRPCRouter({
       include: {
         album: true,
         createdBy: true,
-      },
-    });
-  }),
-
-  refreshTopTracks: protectedProcedure.mutation(async ({ ctx }) => {
-    const account = await ctx.db.account.findFirstOrThrow({
-      where: { userId: ctx.session.user.id },
-    });
-
-    const spotify = SpotifyApi.withAccessToken(env.SPOTIFY_CLIENT_ID, {
-      access_token: account.access_token!,
-      refresh_token: account.refresh_token!,
-      expires_in: account.expires_at! * 1000 - Date.now(),
-      token_type: "Bearer",
-    });
-
-    let topTracks;
-    try {
-      topTracks = await spotify.currentUser.topItems("tracks");
-    } catch (error) {
-      // Token is expired, need to delete the account and re-authenticate
-      await ctx.db.account.delete({
-        where: { id: account.id },
-      });
-
-      throw new Error("Token expired, please re-authenticate");
-    }
-
-    await ctx.db.user.update({
-      where: { id: ctx.session.user.id },
-      data: {
-        listenedTo: {
-          connectOrCreate: topTracks.items.map((track) => {
-            return {
-              where: { id: track.album.id },
-              create: {
-                id: track.album.id,
-                genres: track.album.genres ?? [],
-                image: track.album.images[0]?.url,
-                name: track.album.name,
-                popularity: track.album.popularity ?? track.popularity,
-                releaseDate: track.album.release_date,
-                artist: track.album.artists[0]!.name,
-                tracksCount: track.album.total_tracks,
-              },
-            };
-          }),
-        },
       },
     });
   }),
