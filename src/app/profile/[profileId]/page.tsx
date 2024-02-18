@@ -133,9 +133,6 @@ export default async function ProfilePage({params}: {params: { profileId: string
       </Typography>
       <Avatar alt={user?.name ?? undefined}
               src={user?.image ?? undefined}/>
-      <Typography variant="subtitle1" gutterBottom>
-        Followers: {user?.followedBy}
-      </Typography>
       <Typography variant="h5" gutterBottom>
         Comments Made:
       </Typography>
@@ -164,7 +161,7 @@ export default async function ProfilePage({params}: {params: { profileId: string
                 <Rating
                   name="user-rating"
                   value={review.rating}
-                  precision={0.5}
+                  precision={1}
                   readOnly
                 />
                 <Typography variant="body1">{review.rating}/10</Typography>
