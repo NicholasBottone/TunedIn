@@ -23,6 +23,7 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 import Grid from '@mui/material/Grid';
 import { api } from '~/trpc/server';
+import { getServerAuthSession } from '~/server/auth';
 
 
 
@@ -31,8 +32,11 @@ import { api } from '~/trpc/server';
 export default async function AlbumInfoPage({params}:{params: {albumId:string}}) {
 
     const album = await api.album.getAlbumById.query({id:params.albumId})
+    const session = await getServerAuthSession()
 
-    const review = await api.review.getReviewsByAlbumId.query({albumId:params.albumId})
+    
+
+    const reviews = await api.review.getReviewsByAlbumId.query({albumId:params.albumId})
 
     console.log(album?.image)
     return (
@@ -84,11 +88,18 @@ export default async function AlbumInfoPage({params}:{params: {albumId:string}})
             </Typography>
 
             <List>
-            {album?.tracks.map((track)=>{
+            {reviews?.map((review)=>{
 
-              return (<ListItem>
-                <ListItemText primary={track} style={{ color: "#FFFFFF" }} />
-              </ListItem>);
+              return (
+                <Box display="flex" marginBottom="16px">
+                  <Avatar alt={session?.user?.name ?? undefined} src={session?.user.image ?? undefined} />
+                  <div>
+                    <Typography variant="subtitle1">{session?.user.name}</Typography>
+                    <Typography>{review.rating}</Typography>
+                    <Typography fontStyle="italic">{review.message}</Typography>
+                  </div>
+                </Box>
+              )
 
             })}
             
