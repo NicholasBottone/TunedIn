@@ -79,7 +79,6 @@ const Navs: FunctionComponent<NavsType> = ({
           >
             Sign In
           </h2>
-          <div className="h-[calc(100%_+_2px)] w-[184.6px] absolute my-0 mx-[!important] top-[0px] bottom-[-2px] left-[0px] box-border z-[1] border-[1px] border-solid border-white" />
         </div>
       </div>
     </header>
