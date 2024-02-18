@@ -82,13 +82,13 @@ export default async function AlbumInfoPage({
             divider={<Divider orientation="horizontal" flexItem />}
             spacing={2}
           >
-            <Typography variant="h3" component="h2">
+            <Typography variant="h3" component="h2" style={{ color: "#FFFFFF" }} >
               {album?.name}
             </Typography>
-            <Typography variant="h4" component="h2">
+            <Typography variant="h4" component="h2" style={{ color: "#FFFFFF" }} >
               {"Artist: " + album?.artist}
             </Typography>
-            <Typography variant="h4" component="h2">
+            <Typography variant="h4" component="h2" style={{ color: "#FFFFFF" }} >
               {"Release Date: " + album?.releaseDate}
             </Typography>
             <AlbumReviewForm albumId={album.id} />

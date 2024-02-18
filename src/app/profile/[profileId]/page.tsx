@@ -136,6 +136,13 @@ export default async function ProfilePage({
   const session = await getServerAuthSession();
 
   const user = await api.user.getUserById.query({ id: params?.profileId });
+  console.log(user);
+  console.log(user);
+  console.log(user);
+  console.log(user);
+
+
+
 
   return (
     <div>
@@ -146,7 +153,7 @@ export default async function ProfilePage({
       <Typography variant="h5" gutterBottom>
         Comments Made:
       </Typography>
-      <List>
+      {/* <List>
         {user?.reviews.map((review, index) => {
           return (
             <Box display="flex" marginBottom="16px" key={review.id}>
@@ -182,7 +189,7 @@ export default async function ProfilePage({
             </Box>
           );
         })}
-      </List>
+      </List> */}
     </div>
   );
 }
