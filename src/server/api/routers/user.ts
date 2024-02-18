@@ -19,7 +19,7 @@ export const userRouter = createTRPCRouter({
     });
 
     if (
-      lastSync.lastSpotifySync &&
+      !lastSync.lastSpotifySync ||
       lastSync.lastSpotifySync?.getDate() < Date.now() - 1000 * 60 * 60 * 24
     ) {
       const account = await ctx.db.account.findFirstOrThrow({
@@ -65,6 +65,7 @@ export const userRouter = createTRPCRouter({
               };
             }),
           },
+          lastSpotifySync: new Date(),
         },
       });
     }
