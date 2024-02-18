@@ -125,16 +125,24 @@ export const userRouter = createTRPCRouter({
       where: { userId: ctx.session.user.id },
     });
 
-    console.log(account);
-
     const spotify = SpotifyApi.withAccessToken(env.SPOTIFY_CLIENT_ID, {
       access_token: account.access_token!,
       refresh_token: account.refresh_token!,
-      expires_in: account.expires_at!,
+      expires_in: account.expires_at! * 1000 - Date.now(),
       token_type: "Bearer",
     });
 
-    const topTracks = await spotify.currentUser.topItems("tracks");
+    let topTracks;
+    try {
+      topTracks = await spotify.currentUser.topItems("tracks");
+    } catch (error) {
+      // Token is expired, need to delete the account and re-authenticate
+      await ctx.db.account.delete({
+        where: { id: account.id },
+      });
+
+      throw new Error("Token expired, please re-authenticate");
+    }
 
     await ctx.db.user.update({
       where: { id: ctx.session.user.id },
@@ -145,10 +153,10 @@ export const userRouter = createTRPCRouter({
               where: { id: track.album.id },
               create: {
                 id: track.album.id,
-                genres: track.album.genres,
+                genres: track.album.genres ?? [],
                 image: track.album.images[0]?.url,
                 name: track.album.name,
-                popularity: track.album.popularity,
+                popularity: track.album.popularity ?? track.popularity,
                 releaseDate: track.album.release_date,
                 artist: track.album.artists[0]!.name,
                 tracksCount: track.album.total_tracks,
