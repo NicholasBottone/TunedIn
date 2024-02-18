@@ -1,5 +1,5 @@
 import { FunctionComponent, useMemo, type CSSProperties } from "react";
-
+import { SearchBar } from "./SearchBar";
 export type NavsType = {
   tunedinLogo?: string;
 
@@ -33,48 +33,44 @@ const Navs: FunctionComponent<NavsType> = ({
 
   return (
     <header
-      className="flex-1 bg-gray-200 flex flex-row items-start justify-between pt-[37px] pb-[35px] pr-[30px] pl-[75px] box-border gap-[20px] max-w-full z-[1] text-left text-5xl text-white font-lexend mq750:pl-[37px] mq750:box-border"
+      className="z-[1] box-border flex max-w-full flex-1 flex-row items-start justify-between gap-[20px] bg-gray-200 pb-[35px] pl-[75px] pr-[30px] pt-[37px] text-left font-lexend text-5xl text-white mq750:box-border mq750:pl-[37px]"
       style={navsStyle}
     >
-      <div className="w-[1013px] flex flex-row items-center justify-start gap-[74px] max-w-full mq1050:gap-[74px] mq750:gap-[74px]">
-        <div className="w-[335px] flex flex-row items-start justify-start gap-[25px] max-w-full">
+      <div className="flex w-[1013px] max-w-full flex-row items-center justify-start gap-[74px] mq1050:gap-[74px] mq750:gap-[74px]">
+        <div className="flex w-[335px] max-w-full flex-row items-start justify-start gap-[25px]">
           <img
-            className="h-[68px] w-[76px] relative object-cover"
+            className="relative h-[68px] w-[76px] object-cover"
             alt=""
             src="/appicon@2x.png"
           />
-          <div className="h-14 flex-1 flex flex-col items-start justify-start pt-[3px] px-0 pb-0 box-border">
+          <div className="box-border flex h-14 flex-1 flex-col items-start justify-start px-0 pb-0 pt-[3px]">
             <img
-              className="self-stretch flex-1 relative max-w-full overflow-hidden max-h-full"
+              className="relative max-h-full max-w-full flex-1 self-stretch overflow-hidden"
               alt=""
               src={tunedinLogo}
             />
           </div>
         </div>
-        <div className="flex-1 flex flex-col items-start justify-start pt-0 px-0 pb-[3px] box-border max-w-full">
-          <div className="self-stretch rounded-xl bg-darkslategray-100 flex flex-row items-center justify-start py-[15px] px-10 box-border gap-[12px] max-w-full">
+        <div className="box-border flex max-w-full flex-1 flex-col items-start justify-start px-0 pb-[3px] pt-0">
+          <div className="box-border flex max-w-full flex-row items-center justify-start gap-[12px] self-stretch rounded-xl bg-darkslategray-100 px-10 py-[15px]">
             <img
-              className="h-[23px] w-[23px] relative overflow-hidden shrink-0"
+              className="relative h-[23px] w-[23px] shrink-0 overflow-hidden"
               alt=""
               src="/empty-space.svg"
             />
-            <input
-              className="w-[325px] [border:none] [outline:none] font-lexend text-xl bg-[transparent] h-[25px] relative text-white text-left inline-block max-w-full whitespace-nowrap"
-              placeholder="Search for albums, artists, users..."
-              type="text"
-            />
+            <SearchBar />
           </div>
         </div>
       </div>
-      <div className="w-[239px] flex flex-col items-start justify-start pt-[5px] px-0 pb-0 box-border">
-        <div className="self-stretch shadow-[0px_4px_4px_rgba(0,_0,_0,_0.25)] flex flex-row items-center justify-start pt-2 pb-[9px] pr-0 pl-[26px]">
+      <div className="box-border flex w-[239px] flex-col items-start justify-start px-0 pb-0 pt-[5px]">
+        <div className="flex flex-row items-center justify-start self-stretch pb-[9px] pl-[26px] pr-0 pt-2 shadow-[0px_4px_4px_rgba(0,_0,_0,_0.25)]">
           <img
-            className="h-6 w-[27px] relative"
+            className="relative h-6 w-[27px]"
             alt=""
             src="~/public/login-button-svgrepo-com.svg"
           />
           <h2
-            className="m-0 h-[34.2px] flex-1 relative text-inherit capitalize font-normal font-inherit flex items-center whitespace-nowrap"
+            className="font-inherit relative m-0 flex h-[34.2px] flex-1 items-center whitespace-nowrap text-inherit font-normal capitalize"
             style={signInStyle}
           >
             Sign In

@@ -1,14 +1,8 @@
-
-
-
 import React from "react";
-
 import Container from "@mui/material/Container";
 import Stack from "@mui/material/Stack";
-
 import Divider from "@mui/material/Divider";
 import Paper from "@mui/material/Paper";
-
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemAvatar from "@mui/material/ListItemAvatar";
@@ -22,11 +16,10 @@ import Checkbox from "@mui/material/Checkbox";
 import Grid from "@mui/material/Grid";
 import { api } from "~/trpc/server";
 import { getServerAuthSession } from "~/server/auth";
-import { TextField, Typography, Button, Box, Rating } from '@mui/material';
+import { TextField, Typography, Button, Box, Rating } from "@mui/material";
 import NavsComponent from "../../_components/NavsComponent";
 
 import AlbumReviewForm from "./reviewform";
-
 export default async function AlbumInfoPage({
   params,
 }: {
@@ -39,16 +32,23 @@ export default async function AlbumInfoPage({
     albumId: params.albumId,
   });
   console.log(album?.image);
-  return(
-    <Box style={{ backgroundColor: "#391F67" , overflow:"hidden"}}>
-      <NavsComponent/>
+  return (
+    <Box style={{ backgroundColor: "#391F67", overflow: "hidden" }}>
+      <NavsComponent />
       <Stack
-        sx={{ height: "100vh", width: "100vw", overflow:"hidden"}}
+        sx={{ height: "100vh", width: "100vw", overflow: "hidden" }}
         direction="row"
         divider={<Divider orientation="vertical" flexItem />}
         spacing={2}
       >
-        <Box sx={{ color: "#FFFFFF", height: "100vh", width: "30vw",overflow:"hidden" }}>
+        <Box
+          sx={{
+            color: "#FFFFFF",
+            height: "100vh",
+            width: "30vw",
+            overflow: "hidden",
+          }}
+        >
           <img
             className="relative max-h-full max-w-full flex-1 self-stretch overflow-hidden"
             alt=""
@@ -91,7 +91,7 @@ export default async function AlbumInfoPage({
             <Typography variant="h4" component="h2">
               {"Release Date: " + album?.releaseDate}
             </Typography>
-            <AlbumReviewForm albumId={album.id}/>
+            <AlbumReviewForm albumId={album.id} />
             <List>
               {reviews?.map((review) => {
                 return (
@@ -109,8 +109,14 @@ export default async function AlbumInfoPage({
                         {review.message}
                       </Typography>
 
-                      <div style={{ marginBottom: '16px' }}>
-                        <div style={{ display: 'flex', alignItems: 'center', marginBottom: '8px' }}>
+                      <div style={{ marginBottom: "16px" }}>
+                        <div
+                          style={{
+                            display: "flex",
+                            alignItems: "center",
+                            marginBottom: "8px",
+                          }}
+                        >
                           <Typography variant="body1">User Rating:</Typography>
                           <Rating
                             name="user-rating"
@@ -118,9 +124,13 @@ export default async function AlbumInfoPage({
                             precision={0.5}
                             readOnly
                           />
-                          <Typography variant="body1">{review.rating}/10</Typography>
+                          <Typography variant="body1">
+                            {review.rating}/10
+                          </Typography>
                         </div>
-                        <Typography variant="body1">{review.message}</Typography>
+                        <Typography variant="body1">
+                          {review.message}
+                        </Typography>
                       </div>
                     </div>
                   </Box>

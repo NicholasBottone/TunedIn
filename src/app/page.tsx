@@ -5,13 +5,14 @@ import LandingPageComponent from "./_components/LandingPageComponent";
 import NavsComponent from "./_components/NavsComponent";
 
 import AlbumInfoPage from "./_components/album/AlbumInfoComponent";
+import { FunctionComponent } from "react";
 
-const HomePage: FunctionComponent = () => {
+const ProfilePage: FunctionComponent = () => {
   return (
     <>
       <NavsComponent />
-      <div style={{ backgroundColor: "black", height: "100vh" }}>
-        <h1 style={{ color: "white", padding: "10px", marginLeft: "200px" }}>
+      <div style={{ backgroundColor: "black", height: "180vh" }}>
+        <h1 style={{ color: "white", padding: "1px", marginLeft: "200px" }}>
           Trending Albums
         </h1>
         <TopHitsComponent />
