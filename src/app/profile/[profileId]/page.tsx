@@ -120,9 +120,11 @@ export default async function ProfilePage({params}: {params: { profileId: string
   //   //   />
   //   // </div>
   // );
-  const user = await api.user.getUserById.query(params.profileId?)
-
+  
   const session = await getServerAuthSession();
+  
+  const user = await api.user.getUserById.query({id:params?.profileId})
+
 
   return (
     <div>

@@ -7,6 +7,7 @@ import LandingPageComponent from "./_components/LandingPageComponent";
 import AlbumInfoPage from "./_components/album/AlbumInfoComponent"
 
 const HomePage: FunctionComponent = () => {
+
   return (
     <div className="">
       {/* <section className="self-stretch flex flex-col items-center justify-start gap-[2px] max-w-full">
