@@ -71,7 +71,7 @@ const Navs: FunctionComponent<NavsType> = ({
           <img
             className="h-6 w-[27px] relative"
             alt=""
-            src="/sign-in-button-frame.svg"
+            src="~/public/login-button-svgrepo-com.svg"
           />
           <h2
             className="m-0 h-[34.2px] flex-1 relative text-inherit capitalize font-normal font-inherit flex items-center whitespace-nowrap"
