@@ -1,9 +1,9 @@
 import { FunctionComponent } from "react";
-import Navs from "../_components/Navs";
+import Navs from "../Navs";
 
 const NavsFrameInstance: FunctionComponent = () => {
   return (
-    <div className="self-stretch flex flex-row items-start justify-start pt-0 px-0 pb-[46px] box-border max-w-full">
+    <div className="flex flex-row items-start justify-start  box-border max-w-full">
       <Navs
         tunedinLogo="/tunedinlogo1.svg"
         artistImageTop="0"
