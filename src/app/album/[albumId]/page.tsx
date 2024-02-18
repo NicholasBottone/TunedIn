@@ -48,6 +48,7 @@ export default async function AlbumInfoPage({
             width: "30vw",
             overflow: "hidden",
           }}
+          style = {{overflow:'scroll'}}
         >
           <img
             className="relative max-h-full max-w-full flex-1 self-stretch overflow-hidden"
@@ -81,6 +82,7 @@ export default async function AlbumInfoPage({
             direction="column"
             divider={<Divider orientation="horizontal" flexItem />}
             spacing={2}
+            style = {{overflow:'scroll'}}
           >
             <Typography variant="h3" component="h2" style={{ color: "#FFFFFF" }} >
               {album?.name}
@@ -92,7 +94,7 @@ export default async function AlbumInfoPage({
               {"Release Date: " + album?.releaseDate}
             </Typography>
             <AlbumReviewForm albumId={album.id} />
-            <List>
+            <List style = {{overflow:'scroll'}}>
               {reviews?.map((review) => {
                 return (
                   <Box display="flex" marginBottom="16px" key={review.id}>
