@@ -106,11 +106,7 @@ export default async function AlbumInfoPage({
                       <Typography variant="subtitle1">
                         {session?.user.name}
                       </Typography>
-                      <Typography>{review.rating}</Typography>
-                      <Typography fontStyle="italic">
-                        {review.message}
-                      </Typography>
-
+                      <Typography>{review.rating}/10</Typography>
                       <div style={{ marginBottom: "16px" }}>
                         <div
                           style={{
@@ -122,12 +118,12 @@ export default async function AlbumInfoPage({
                           <Typography variant="body1">User Rating:</Typography>
                           <Rating
                             name="user-rating"
-                            value={review.rating}
+                            value={review.rating*2}
                             precision={0.5}
                             readOnly
                           />
                           <Typography variant="body1">
-                            {review.rating}/10
+                            {review.rating+"/10"}
                           </Typography>
                         </div>
                         <Typography variant="body1">
