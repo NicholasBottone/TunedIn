@@ -32,19 +32,22 @@ const AlbumReviewForm = ({albumId}:{albumId:string}) => {
   };
 
   return (
-    <Box sx={{ maxWidth: 400, margin: 'auto', mt: 3 }}>
+    <Box sx={{ maxWidth: 400, margin: 'auto', mt: 3 }} 
+    >
       <Typography variant="h6" gutterBottom>
         Write a Review
       </Typography>
       <TextField
         multiline
-        rows={4}
+        rows={2}
         fullWidth
         label="Your Review"
         variant="outlined"
         value={reviewText}
         onChange={handleReviewTextChange}
         margin="normal"
+        style={{ backgroundColor: '#FFFFFF' ,outline: '2px solid #FFFFFF'}}
+        
       />
       <Typography component="legend">Rating (out of 10)</Typography>
       <Rating
