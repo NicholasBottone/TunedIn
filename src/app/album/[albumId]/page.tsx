@@ -56,7 +56,6 @@ export default async function AlbumInfoPage({
       >
         Sign In
       </h2>
-      <div className="h-[calc(100%_+_2px)] w-[184.6px] absolute my-0 mx-[!important] top-[0px] bottom-[-2px] left-[0px] box-border z-[1] border-[1px] border-solid border-white" />
     </div>
   </div>
 </header>
@@ -77,12 +76,6 @@ export default async function AlbumInfoPage({
           <h1 className="m-0 h-[91px] flex-1 relative text-inherit lowercase font-semibold font-inherit inline-block max-w-full mq1050:text-32xl mq450:text-19xl">
           {album?.name}
           </h1>
-          <img
-            className="h-[2.7px] w-[942px] absolute my-0 mx-[!important] right-[-42px] bottom-[-2.5px] object-contain z-[1]"
-            loading="eager"
-            alt=""
-            src="/line-1.svg"
-          />
         </div>
         <h3 className="m-0 w-[483px] h-14 relative text-17xl lowercase font-semibold font-inherit inline-block shrink-0 max-w-full mq1050:text-10xl mq450:text-3xl">
         {album?.artist}
@@ -91,9 +84,13 @@ export default async function AlbumInfoPage({
         <div className="w-[451px] flex flex-col items-start justify-start gap-[27px] max-w-full text-5xl">
           <div className="self-stretch relative capitalize mq450:text-lgi">
             <span className="font-extralight">{"Release Date: "+album.releaseDate}</span>
-            <span className="font-semibold whitespace-pre-wrap">{`     {release_date}`}</span>
           </div>
         </div>
+        <div className="w-[451px] flex flex-col items-start justify-start gap-[27px] max-w-full text-5xl">
+          <AlbumReviewForm albumId={album.id}/>
+
+        </div>
+
       </div>
     </div>
       <div className="self-stretch flex flex-row items-start justify-start py-0 pr-0 pl-2.5 box-border max-w-full">
@@ -102,7 +99,7 @@ export default async function AlbumInfoPage({
             <div className="w-[356px] h-[60px] relative capitalize font-medium flex items-end shrink-0 max-w-full mq1050:text-7xl mq450:text-lgi">
               Track List
             </div>
-            <div className="self-stretch flex flex-col items-start justify-start text-center text-5xl">
+            <div className="self-stretch flex flex-col items-start justify-start text-center text-5xl overflow-scroll	">
                 {album.tracks.map((track,index)=>{
                   return (
                 <div className="h-[72px] flex-1 relative capitalize font-light text-left flex items-center min-w-[106px] mq450:text-lgi">
@@ -212,7 +209,6 @@ export default async function AlbumInfoPage({
           <Typography variant="h3" component="h2">
             Track List
           </Typography>
-          <AlbumReviewForm albumId={album.id}/>
           <List>
             {album?.tracks.map((track) => {
               return (
