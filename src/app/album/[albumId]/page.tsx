@@ -56,7 +56,7 @@ export default async function AlbumInfoPage({
           <Typography variant="h3" component="h2">
             Track List
           </Typography>
-          <AlbumReviewForm />
+          <AlbumReviewForm albumId={album.id}/>
           <List>
             {album?.tracks.map((track) => {
               return (

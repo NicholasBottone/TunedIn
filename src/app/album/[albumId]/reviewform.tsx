@@ -1,10 +1,16 @@
 'use client'
 import React, { useState } from 'react';
 import { TextField, Typography, Button, Box, Rating } from '@mui/material';
+import { api } from '~/trpc/react';
 
-const AlbumReviewForm = () => {
+
+const AlbumReviewForm = ({albumId}:{albumId:string}) => {
   const [reviewText, setReviewText] = useState('');
   const [value, setValue] = React.useState<number | null>(0);
+
+  const sendReview = api.review.create.useMutation()
+
+
 
   const handleReviewTextChange = (event:React.ChangeEvent<HTMLInputElement>) => {
     setReviewText(event.target.value);
@@ -15,6 +21,11 @@ const AlbumReviewForm = () => {
     // You can handle form submission here, e.g., send review to backend
     console.log("Review Text:", reviewText);
     console.log("Rating:", value);
+    sendReview.mutate({
+          albumId: albumId,
+          rating: value!,
+          message: reviewText
+    });
     // Reset the form after submission
     setReviewText('');
     setValue(0);
@@ -42,7 +53,7 @@ const AlbumReviewForm = () => {
         onChange={(event, newValue) => {
             setValue(newValue);
           }}
-        precision={0.1}
+        precision={1}
       />
       <Box mt={2}>
         <Button
