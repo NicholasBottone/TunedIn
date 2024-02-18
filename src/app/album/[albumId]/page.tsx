@@ -25,6 +25,9 @@ import Grid from '@mui/material/Grid';
 import { api } from '~/trpc/server';
 import { getServerAuthSession } from '~/server/auth';
 
+import AlbumReviewForm from './reviewform';
+
+
 
 
 
@@ -37,6 +40,9 @@ export default async function AlbumInfoPage({params}:{params: {albumId:string}})
     
 
     const reviews = await api.review.getReviewsByAlbumId.query({albumId:params.albumId})
+
+
+    
 
     console.log(album?.image)
     return (
@@ -58,6 +64,7 @@ export default async function AlbumInfoPage({params}:{params: {albumId:string}})
           <Typography variant="h3" component="h2">
             Track List
           </Typography>
+          <AlbumReviewForm/>
           <List>
             {album?.tracks.map((track)=>{
 
