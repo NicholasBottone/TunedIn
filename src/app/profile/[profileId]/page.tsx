@@ -140,7 +140,7 @@ export default async function ProfilePage({
   return (
     <div>
       <Typography variant="h4" gutterBottom>
-        {user?.name}'s Profile
+        {user?.name}&apos;s Profile
       </Typography>
       <Avatar alt={user?.name ?? undefined} src={user?.image ?? undefined} />
       <Typography variant="h5" gutterBottom>
