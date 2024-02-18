@@ -1,13 +1,10 @@
 import React from "react";
 
-import Box from "@mui/material/Box";
-
 import Container from "@mui/material/Container";
 import Stack from "@mui/material/Stack";
 
 import Divider from "@mui/material/Divider";
 import Paper from "@mui/material/Paper";
-import Typography from "@mui/material/Typography";
 
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
@@ -22,6 +19,7 @@ import Checkbox from "@mui/material/Checkbox";
 import Grid from "@mui/material/Grid";
 import { api } from "~/trpc/server";
 import { getServerAuthSession } from "~/server/auth";
+import { TextField, Typography, Button, Box, Rating } from '@mui/material';
 
 import AlbumReviewForm from "./reviewform";
 
@@ -107,6 +105,20 @@ export default async function AlbumInfoPage({
                       <Typography fontStyle="italic">
                         {review.message}
                       </Typography>
+
+                      <div style={{ marginBottom: '16px' }}>
+                        <div style={{ display: 'flex', alignItems: 'center', marginBottom: '8px' }}>
+                          <Typography variant="body1">User Rating:</Typography>
+                          <Rating
+                            name="user-rating"
+                            value={review.rating}
+                            precision={0.5}
+                            readOnly
+                          />
+                          <Typography variant="body1">{review.rating}/10</Typography>
+                        </div>
+                        <Typography variant="body1">{review.message}</Typography>
+                      </div>
                     </div>
                   </Box>
                 );
