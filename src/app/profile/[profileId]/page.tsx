@@ -120,7 +120,7 @@ export default async function ProfilePage({params}: {params: { profileId: string
   //   //   />
   //   // </div>
   // );
-  
+  console.log(params.profileId);
   const session = await getServerAuthSession();
   
   const user = await api.user.getUserById.query({id:params?.profileId})
@@ -129,12 +129,12 @@ export default async function ProfilePage({params}: {params: { profileId: string
   return (
     <div>
       <Typography variant="h4" gutterBottom>
-        {session?.user.name}'s Profile
+        {user?.name}'s Profile
       </Typography>
-      <Avatar alt={session?.user?.name ?? undefined}
-              src={session?.user.image ?? undefined}/>
+      <Avatar alt={user?.name ?? undefined}
+              src={user?.image ?? undefined}/>
       <Typography variant="subtitle1" gutterBottom>
-        Followers: {user.followedBy}
+        Followers: {user?.followedBy}
       </Typography>
       <Typography variant="h5" gutterBottom>
         Comments Made:
