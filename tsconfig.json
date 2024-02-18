@@ -2,27 +2,28 @@
   "compilerOptions": {
     "esModuleInterop": true,
     "skipLibCheck": true,
-    "target": "es2022",
+    "target": "es2022", // Use the newer target for better language features
     "allowJs": true,
     "resolveJsonModule": true,
-    "moduleDetection": "force",
+    "moduleDetection": "force", // Specific to one of the configs, consider project needs
     "isolatedModules": true,
     "strict": true,
-    "noUncheckedIndexedAccess": true,
+    "noUncheckedIndexedAccess": true, // Keep strict checks
     "checkJs": true,
-    "lib": ["dom", "dom.iterable", "ES2022"],
+    "lib": ["dom", "dom.iterable", "ESNext"], // Merge both lib arrays, choosing ESNext for broader features
     "noEmit": true,
-    "module": "ESNext",
-    "moduleResolution": "node",
-    "jsx": "preserve",
+    "module": "ESNext", // Use ESNext for modules for the latest features
+    "moduleResolution": "node", // Common setting, ensure compatibility with node's resolution algorithm
+    "jsx": "preserve", // "preserve" allows Next.js to handle JSX transformation
     "forceConsistentCasingInFileNames": true,
     "noFallthroughCasesInSwitch": true,
-    "plugins": [{ "name": "next" }],
-    "incremental": true,
-    "baseUrl": ".",
+    "plugins": [{ "name": "next" }], // Keep Next.js plugin if using Next.js
+    "incremental": true, // Enables incremental compilation for faster builds
+    "baseUrl": ".", // Keep the base URL for path aliases
     "paths": {
       "~/*": ["./src/*"]
-    }
+    },
+    "allowSyntheticDefaultImports": true // Allow default imports from modules with no default export
   },
   "include": [
     ".eslintrc.cjs",

@@ -1,46 +1,71 @@
-import { type Config } from "tailwindcss";
-import { fontFamily } from "tailwindcss/defaultTheme";
-
-export default {
-  content: ["./src/**/*.{js,jsx,ts,tsx}"], // Broad coverage from Figma project
+/** @type {import('tailwindcss').Config} */
+module.exports = {
+  content: ["./src/**/*.{js,jsx,ts,tsx}"],
   theme: {
     extend: {
-      // Your application's font family extension
-      fontFamily: {
-        sans: ["var(--font-sans)", ...fontFamily.sans],
-        lexend: "Lexend", // From Figma project
-      },
-      // Figma project customizations
       colors: {
         midnightblue: "#391f67",
+        "neutral-500": "#6b7280",
+        "neutral-900": "#111827",
+        darkslategray: {
+          "100": "#373737",
+          "200": "rgba(65, 65, 65, 0.89)",
+        },
         white: "#fff",
         darkslateblue: "rgba(119, 96, 161, 0.74)",
-        gray: "#0e0e0e",
-        darkslategray: "#373737",
+        gray: {
+          "100": "#292b2f",
+          "200": "#0e0e0e",
+        },
+        dodgerblue: "#3d89f6",
       },
-      spacing: {}, // Customize as needed
+      spacing: {},
+      fontFamily: {
+        "body-xl-medium": "Inter",
+        lexend: "Lexend",
+      },
       borderRadius: {
         "71xl": "90px",
+        "29xl": "48px",
       },
-      fontSize: {
-        sm: "14px",
-        "21xl": "40px",
-        "5xl": "24px",
-        "13xl": "32px",
-        lg: "18px",
-        xl: "20px",
-        inherit: "inherit",
+    },
+    fontSize: {
+      xl: "20px",
+      base: "16px",
+      "21xl": "40px",
+      "5xl": "24px",
+      "13xl": "32px",
+      sm: "14px",
+      lg: "18px",
+      lgi: "19px",
+      "7xl": "26px",
+      "17xl": "36px",
+      "10xl": "29px",
+      "3xl": "22px",
+      "45xl": "64px",
+      "32xl": "51px",
+      "19xl": "38px",
+      inherit: "inherit",
+    },
+    screens: {
+      lg: {
+        max: "1200px",
       },
-      screens: {
-        mq1025: { raw: "screen and (max-width: 1025px)" },
-        mq975: { raw: "screen and (max-width: 975px)" },
-        mq725: { raw: "screen and (max-width: 725px)" },
-        mq450: { raw: "screen and (max-width: 450px)" },
+      mq1050: {
+        raw: "screen and (max-width: 1050px)",
+      },
+      mq800: {
+        raw: "screen and (max-width: 800px)",
+      },
+      mq750: {
+        raw: "screen and (max-width: 750px)",
+      },
+      mq450: {
+        raw: "screen and (max-width: 450px)",
       },
     },
   },
-  plugins: [],
   corePlugins: {
-    preflight: false, // Decision based on project needs
+    preflight: false,
   },
-} satisfies Config;
+};

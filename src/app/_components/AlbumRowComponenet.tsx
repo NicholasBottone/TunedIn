@@ -2,70 +2,70 @@ import { FunctionComponent, useMemo, type CSSProperties } from "react";
 
 export type AlbumRowComponenetType = {
   /** Style props */
-  propWidth?: CSSProperties["width"];
+  artistNameWidth?: CSSProperties["width"];
+  artistNameAlignSelf?: CSSProperties["alignSelf"];
+  frameDivAlignSelf?: CSSProperties["alignSelf"];
   propAlignSelf?: CSSProperties["alignSelf"];
   propAlignSelf1?: CSSProperties["alignSelf"];
   propAlignSelf2?: CSSProperties["alignSelf"];
   propAlignSelf3?: CSSProperties["alignSelf"];
-  propAlignSelf4?: CSSProperties["alignSelf"];
-  propAlignSelf5?: CSSProperties["alignSelf"];
 };
 
 const AlbumRowComponenet: FunctionComponent<AlbumRowComponenetType> = ({
-  propWidth,
+  artistNameWidth,
+  artistNameAlignSelf,
+  frameDivAlignSelf,
   propAlignSelf,
   propAlignSelf1,
   propAlignSelf2,
   propAlignSelf3,
-  propAlignSelf4,
-  propAlignSelf5,
 }) => {
   const albumRowComponenetStyle: CSSProperties = useMemo(() => {
     return {
-      width: propWidth,
+      width: artistNameWidth,
+      alignSelf: artistNameAlignSelf,
+    };
+  }, [artistNameWidth, artistNameAlignSelf]);
+
+  const innerFrameStyle: CSSProperties = useMemo(() => {
+    return {
+      alignSelf: frameDivAlignSelf,
+    };
+  }, [frameDivAlignSelf]);
+
+  const frameDivStyle: CSSProperties = useMemo(() => {
+    return {
       alignSelf: propAlignSelf,
     };
-  }, [propWidth, propAlignSelf]);
+  }, [propAlignSelf]);
 
-  const albumRowComponentsStyle: CSSProperties = useMemo(() => {
+  const frameDiv1Style: CSSProperties = useMemo(() => {
     return {
       alignSelf: propAlignSelf1,
     };
   }, [propAlignSelf1]);
 
-  const frameDivStyle: CSSProperties = useMemo(() => {
+  const frameDiv2Style: CSSProperties = useMemo(() => {
     return {
       alignSelf: propAlignSelf2,
     };
   }, [propAlignSelf2]);
 
-  const frameDiv1Style: CSSProperties = useMemo(() => {
+  const frameDiv3Style: CSSProperties = useMemo(() => {
     return {
       alignSelf: propAlignSelf3,
     };
   }, [propAlignSelf3]);
 
-  const frameDiv2Style: CSSProperties = useMemo(() => {
-    return {
-      alignSelf: propAlignSelf4,
-    };
-  }, [propAlignSelf4]);
-
-  const frameDiv3Style: CSSProperties = useMemo(() => {
-    return {
-      alignSelf: propAlignSelf5,
-    };
-  }, [propAlignSelf5]);
-
   return (
     <div
-      className="w-[1090px] flex flex-row flex-wrap items-start justify-center gap-[45px] min-h-[269px] max-w-full text-left text-sm text-white font-lexend mq725:gap-[45px]"
+      className="w-[1090px] flex flex-row flex-wrap items-start justify-center gap-[45px] min-h-[269px] max-w-full z-[1] text-left text-sm text-white font-lexend mq750:gap-[45px]"
       style={albumRowComponenetStyle}
     >
       <div className="flex-1 rounded-xl bg-midnightblue flex flex-col items-center justify-center gap-[4px] min-w-[178px] max-w-[182px]">
         <div
           className="h-[190px] flex flex-col items-center justify-start"
-          style={albumRowComponentsStyle}
+          style={innerFrameStyle}
         >
           <img
             className="w-[182px] h-[178px] relative rounded-xl object-cover"
@@ -90,6 +90,7 @@ const AlbumRowComponenet: FunctionComponent<AlbumRowComponenetType> = ({
         >
           <img
             className="w-[182px] h-[178px] relative rounded-xl object-cover"
+            loading="eager"
             alt=""
             src="/albumphotoplaceholder-1@2x.png"
           />
@@ -110,6 +111,7 @@ const AlbumRowComponenet: FunctionComponent<AlbumRowComponenetType> = ({
         >
           <img
             className="w-[182px] h-[178px] relative rounded-xl object-cover"
+            loading="eager"
             alt=""
             src="/albumphotoplaceholder-2@2x.png"
           />
@@ -150,6 +152,7 @@ const AlbumRowComponenet: FunctionComponent<AlbumRowComponenetType> = ({
         >
           <img
             className="w-[182px] h-[178px] relative rounded-xl object-cover"
+            loading="eager"
             alt=""
             src="/albumphotoplaceholder-4@2x.png"
           />
