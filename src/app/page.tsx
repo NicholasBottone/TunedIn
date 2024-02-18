@@ -9,32 +9,29 @@ import { FunctionComponent } from "react";
 
 const HomePage: FunctionComponent = () => {
   return (
-    <>
+    <div style={{ backgroundColor: "black" }}>
       <NavsComponent />
-      <div style={{ backgroundColor: "black", height: "200vh" }}>
-        <h1
-          style={{
-            color: "white",
-            marginLeft: "200px",
-            backgroundColor: "black",
-          }}
-        >
-          Trending Albums
-        </h1>
-        <TopHitsComponent />
-        <h1
-          style={{
-            color: "white",
-            padding: "40px",
-            marginLeft: "200px",
-            marginTop: "80px",
-          }}
-        >
-          Your Top Albums
-        </h1>
-        <PersonalTopsComponents />
-      </div>
-    </>
+      <h1
+        style={{
+          color: "white",
+          marginLeft: "200px",
+          backgroundColor: "black",
+        }}
+      >
+        Trending Albums
+      </h1>
+      <TopHitsComponent />
+      <h1
+        style={{
+          color: "white",
+          marginLeft: "200px",
+          marginTop: "80px",
+        }}
+      >
+        Your Top Albums
+      </h1>
+      <PersonalTopsComponents />
+    </div>
   );
 };
 
