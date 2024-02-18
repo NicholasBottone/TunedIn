@@ -33,4 +33,4 @@ const HomePage: FunctionComponent = () => {
   );
 };
 
-export default HomeScreen;
+export default HomePage;
