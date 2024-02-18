@@ -3,8 +3,8 @@ import { FunctionComponent } from "react";
 const LandingPageComponent: FunctionComponent = () => {
   return (
     <footer className="self-stretch flex flex-row items-start justify-between pt-[57px] pb-[147px] pr-[140px] pl-[95px] box-border relative gap-[20px] max-w-full text-left text-xl text-neutral-900 font-body-xl-medium mq450:pl-5 mq450:pr-5 mq450:box-border mq1050:flex-wrap mq750:pl-[47px] mq750:pr-[70px] mq750:box-border">
-      <div className="h-full w-full absolute my-0 mx-[!important] top-[0px] right-[0px] bottom-[0px] left-[0px] bg-darkslategray-200" />
-      <div className="flex flex-row items-start justify-start pt-0 pb-[19px] pr-[35px] pl-0 relative gap-[8px] z-[1]">
+      <div className="h-full w-100vh absolute my-0 mx-[!important] top-[0px] right-[0px] bottom-[0px] left-[0px] bg-darkslategray-200" />
+      <div className="flex flex-row items-start justify-start pt-0 pb-[19px] pl-0  z-[1]">
         <h3 className="m-0 relative text-inherit leading-[28px] font-medium font-inherit mq450:text-base mq450:leading-[22px]">
           TunedIn is a private product
         </h3>

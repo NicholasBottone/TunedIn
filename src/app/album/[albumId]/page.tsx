@@ -44,7 +44,7 @@ export default async function AlbumInfoPage({
 >
   <NavsComponent/>
   <div className="w-[239px] flex flex-col items-start justify-start pt-[5px] px-0 pb-0 box-border">
-    <div className="self-stretch shadow-[0px_4px_4px_rgba(0,_0,_0,_0.25)] flex flex-row items-center justify-start pt-2 pb-[9px] pr-0 pl-[26px] relative gap-[16px]">
+    <div className="self-stretch shadow-[0px_4px_4px_rgba(0,_0,_0,_0.25)] flex flex-row items-center justify-start pt-2 pb-[9px] pr-0 pl-[26px]">
       <img
         className="h-6 w-[27px] relative"
         alt=""

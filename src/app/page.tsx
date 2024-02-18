@@ -10,7 +10,7 @@ const HomePage: FunctionComponent = () => {
   return (
     <>
       <NavsComponent />
-      <div style={{ backgroundColor: "black", height: "180vh" }}>
+      <div style={{ backgroundColor: "black", height: "100vh" }}>
         <h1 style={{ color: "white", padding: "10px", marginLeft: "200px" }}>
           Trending Albums
         </h1>
