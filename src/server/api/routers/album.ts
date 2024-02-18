@@ -6,6 +6,13 @@ import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
 
 export const albumRouter = createTRPCRouter({
   searchAlbum: publicProcedure
+    .meta({
+      openapi: {
+        method: "GET",
+        path: "/search",
+        summary: "Search for albums",
+      },
+    })
     .input(z.object({ query: z.string() }))
     .query(async ({ ctx, input }) => {
       return ctx.db.album.findMany({
@@ -18,6 +25,13 @@ export const albumRouter = createTRPCRouter({
     }),
 
   getAlbumById: publicProcedure
+    .meta({
+      openapi: {
+        method: "GET",
+        path: "/:id",
+        summary: "Get an album by ID",
+      },
+    })
     .input(z.object({ id: z.string() }))
     .query(async ({ ctx, input }) => {
       let album = await ctx.db.album.findUniqueOrThrow({

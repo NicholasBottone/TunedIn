@@ -8,6 +8,13 @@ import {
 
 export const reviewRouter = createTRPCRouter({
   getReviewById: publicProcedure
+    .meta({
+      openapi: {
+        method: "GET",
+        path: "/:id",
+        summary: "Get a review by ID",
+      },
+    })
     .input(z.object({ id: z.string() }))
     .query(({ ctx, input }) => {
       return ctx.db.review.findUnique({
@@ -16,6 +23,13 @@ export const reviewRouter = createTRPCRouter({
     }),
 
   getReviewsByAlbumId: publicProcedure
+    .meta({
+      openapi: {
+        method: "GET",
+        path: "/album/:albumId",
+        summary: "Get reviews for an album",
+      },
+    })
     .input(z.object({ albumId: z.string() }))
     .query(({ ctx, input }) => {
       return ctx.db.review.findMany({
@@ -24,6 +38,13 @@ export const reviewRouter = createTRPCRouter({
     }),
 
   create: protectedProcedure
+    .meta({
+      openapi: {
+        method: "POST",
+        path: "/",
+        summary: "Create a review",
+      },
+    })
     .input(
       z.object({
         albumId: z.string(),

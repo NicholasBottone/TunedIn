@@ -6,6 +6,13 @@ import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
 
 export const playlistRouter = createTRPCRouter({
   getPlaylistById: publicProcedure
+    .meta({
+      openapi: {
+        method: "GET",
+        path: "/:id",
+        summary: "Get a playlist by ID",
+      },
+    })
     .input(z.object({ id: z.string() }))
     .query(async ({ ctx, input }) => {
       let playlist = await ctx.db.playlist.findUniqueOrThrow({
