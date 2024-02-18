@@ -1,5 +1,5 @@
 import { FunctionComponent } from "react";
-import Navs from "./Navs";
+import Navs from "../_components/Navs";
 
 const NavsFrameInstance: FunctionComponent = () => {
   return (

@@ -4,6 +4,9 @@ import ArtistRow from "./_components/ArtistRow";
 import AlbumnameFrame from "./_components/AlbumnameFrame";
 import LandingPageComponent from "./_components/LandingPageComponent";
 
+import AlbumInfoPage from "./album/AlbumInfoComponent"
+
+AlbumInfoPage
 const HomePage: FunctionComponent = () => {
   return (
     <div className="w-full relative bg-midnightblue overflow-hidden flex flex-col items-center justify-start gap-[74px] tracking-[normal] text-left text-21xl text-white font-lexend mq450:gap-[74px] mq750:gap-[74px]">
@@ -16,6 +19,7 @@ const HomePage: FunctionComponent = () => {
         Rate Your Favrouite Albumn
       </h1>
       <LandingPageComponent />
+      <AlbumInfoPage/>
     </div>
   );
 };
